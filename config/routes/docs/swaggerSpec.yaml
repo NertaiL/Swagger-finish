@@ -1,0 +1,194 @@
+tags:
+  - name: Travels
+    description: API para la gestión de viajes
+  - name: Users
+    description: API para la gestión de usuarios
+
+components:   
+  securitySchemes: 
+    BearerAuth:  
+      type: http
+      scheme: bearer
+  schemas:
+    Travels: 
+      type: object
+      required:  
+        - destino
+        - presupuesto
+      properties:
+        id:
+          type: integer
+          description: The auto-generated id of the users
+        destino:
+          type: string
+          description: The travel's destination
+        presupuesto:
+          type: integer
+          description: The travel's budget
+        createdAt:
+          type: string
+          description: The date of the record's creation
+        updatedAt:
+          type: string
+          description: The date of the record's last update
+      example:   
+        destino: paris
+        presupuesto: 1000
+    Users:
+      type: object
+      required:
+        - nombre
+        - apellido
+        - email
+        - password
+      properties:
+        id:
+          type: integer
+          description: The auto-generated id of the users
+        nombre:
+          type: string
+          description: The user's name
+        apellido:
+          type: string
+          description: The user's last name
+        email:
+          type: string
+          description: The user's email
+        password:
+          type: string
+          description: The user's password
+        createdAt:
+          type: string
+          description: The date of the record's creation
+        updatedAt:
+          type: string
+          description: The date of the record's last update
+      example:
+        nombre: Hans
+        apellido: Latoja.
+        email: hns@gmail.com
+        password: kerner
+
+paths:
+  /travels:
+    get: 
+      security:  
+        - BearerAuth: [] 
+      summary: Obtener todos los viajes
+      tags: [Travels] 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  travels: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Travels' 
+        '400':
+          description: Error al obtener los viajes
+
+    post:
+      summary: Crear un nuevo viaje
+      tags: [Travels]
+      requestBody: 
+        required: true 
+        content:
+          application/json: 
+            schema:
+               type: object  
+               properties:
+                 travels:
+                   $ref: '#/components/schemas/Travels' 
+      responses:  
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  travels:
+                    $ref: '#/components/schemas/Travels'
+        '400':
+          description: Error al obtener los viajes
+
+  /travels/{id}:
+    put:
+      summary: Actualizar un viaje
+      tags: [Travels]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The travel's id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                travels:
+                  $ref: '#/components/schemas/Travels'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  travel:
+                    $ref: '#/components/schemas/Travels'
+        '400':
+          description: Error al obtener los viajes
+
+    delete:
+      summary: Eliminar un viaje
+      tags: [Travels]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The travel's id
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Error al obtener los viajes
+
+  /users:
+    post:
+      summary: Crear un nuevo usuario
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/Users'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+               type: object
+               properties:
+                 user:
+                   $ref: '#/components/schemas/Users'
+        '400':
+          description: Error al obtener los viajes
+
+

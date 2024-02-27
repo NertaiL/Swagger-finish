@@ -25,7 +25,8 @@
     "pg": "^8.11.3",
     "pg-format": "^1.0.4",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.9",
